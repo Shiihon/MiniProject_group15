@@ -2,7 +2,7 @@
 #Requests: to fetch data from the API that we found on an open source "cvrapi.dk", public api's.
 #Pandas: We use pandas to work with data in a table format
 #Streamlit: Is used to build the application(remember to download streamlit in the terminal). To open it in the browser, write: streamlit run stremlit_app.py (<- the files name), in the terminal.
-#matplotlib:Creating charts.
+#matplotlib:Creating charts..
 import json
 import requests
 import pandas as pd
