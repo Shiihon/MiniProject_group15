@@ -9,6 +9,7 @@ st.set_page_config(page_title="Wine Quality Explorer", layout="wide")
 ## Select the page
 page = st.sidebar.radio("Pages", ["Wine Quality Analysis", "Wine Quality Info"])
 
+# A page for our plot, diagrams and other things we analyzed
 if page == "Wine Quality Analysis":
     ## Title
     st.title("Wine Quality Exploratory Data Analysis",)
@@ -46,8 +47,8 @@ if page == "Wine Quality Analysis":
     ## Descriptive Stats
     st.subheader("Descriptive Statistics")
     st.write("""
-        Descriptive statistics such as mean, median, standard deviation, and quartiles will help you understand the distribution and central tendency of the wine attributes. 
-            This is used as a starting point to analyze patterns and identify any noteworthy trends in the wine dataset.
+        Descriptive statistics such as mean, median, standard deviation, and quartiles will help us understand the distribution and central tendency of the wine attributes. 
+        This is used as a starting point to analyze patterns and identify any noteworthy trends in the wine dataset.
         """)
     st.write(chosen_df.describe())
 
@@ -57,14 +58,22 @@ if page == "Wine Quality Analysis":
         ## Distribution & Boxplot
         st.subheader("Feature Distribution")
         st.markdown("#### Visualizing Feature Distribution & Spread")
-        st.write("The distribution plot shows the frequency of different values for each selected feature, helping you understand the shape and spread of the data. " \
-        "By examining the histogram along with the Kernel Density Estimation (KDE) curve, you can get a clearer idea of whether a feature follows a normal distribution, is skewed, or has multiple modes. " \
-        "On the other hand, the boxplot provides a summary of the data's spread and highlights potential outliers, the median, and the interquartile range (IQR). " \
-        " These plots are crucial for identifying patterns, outliers, or potential transformations needed for further analysis.")
+        st.write("""
+            The distribution plot shows the frequency of different values for each selected feature, helping us to understand the shape and spread of the data.
+            By examining the histogram along with the Kernel Density Estimation (KDE) curve, we can get a clearer idea of whether a feature follows a normal distribution, is skewed, or has multiple modes.
+            On the other hand, the boxplot provides a summary of the data's spread and highlights potential outliers, the median, and the interquartile range (IQR).
+            These plots are crucial for identifying patterns, outliers, or potential transformations needed for further analysis.
+            """)
         # creates dropdown to be able to select a specific feature (column) from the dataset
         col_to_plot = st.selectbox("Select feature for distribution plot:", chosen_df.columns[:-1])
 
         st.markdown("##### Histogram")
+        st.write("""
+                Looking through all the histograms it is clear that almost all the shapes do not have the characteristics of a normal distribution.
+                Almost all of them are right-skewed with long tails extending to unusually high values compared to where most of the data is gathered.
+                The only histogram with a normal-like distribution is the one for "ph". 
+                The only other histogram that stands out is the one for "quality" which have an almost symmetric multimodal distribution.
+                """)
         # creates a new figure for plotting
         fig1, ax1 = plt.subplots()
         # creates a histogram with kde curve, drawn on specified axes
@@ -110,7 +119,27 @@ if page == "Wine Quality Analysis":
     # Correlation Heatmap
     if st.checkbox("Show Correlation Heatmap"):
         st.subheader("Correlation Heatmap")
-        chosen_df['wine_type_white'] = chosen_df['wine_type'].map({'red': 0, 'white': 1})
+        if dataset_choice == "Red Wine":
+            st.write("""
+                The correlation heatmap for the red wine dataset reveals how different chemical properties relate to wine quality. 
+                Notably, alcohol content shows a moderate positive correlation with quality, suggesting that higher alcohol levels may be associated with better-rated red wines. 
+                Conversely, volatile acidity and density exhibit negative correlations with quality, implying that higher levels of these characteristics may be linked to lower quality. 
+                Overall, the heatmap helps identify which variables might play a more influential role in determining red wine quality, providing a foundation for deeper statistical or predictive modeling.
+                """)
+        elif dataset_choice == "White Wine":
+            st.write("""
+                In the white wine dataset, the heatmap similarly highlights key relationships. 
+                Alcohol again shows a relatively strong positive correlation with quality, indicating consistency across wine types. 
+                Density and residual sugar tend to correlate negatively or very weakly with quality, suggesting they may not positively influence perceived quality. 
+                Interestingly, white wine tends to show slightly different correlation strengths compared to red wine, which may reflect differences in production or chemical profiles. 
+                These insights guide feature selection for modeling wine quality.
+                """)
+        else:
+            st.write("""
+                When both red and white wine data are combined, the heatmap provides an overview of general patterns across all wine types. 
+                While alcohol remains a key feature positively correlated with quality, the correlations of other variables are somewhat diluted due to differences between red and white wine profiles.
+                """)
+            chosen_df['wine_type_white'] = chosen_df['wine_type'].map({'red': 0, 'white': 1})
 
         # Select only numeric columns
         numeric_df = chosen_df.select_dtypes(include=['number'])
@@ -119,6 +148,7 @@ if page == "Wine Quality Analysis":
         sns.heatmap(corr, annot=True, cmap='coolwarm', ax=ax5)
         st.pyplot(fig5)
 
+# Another page for wine quality info
 if page == "Wine Quality Info":
     ## Title
     st.title(" What Affects Wine Quality?",)
