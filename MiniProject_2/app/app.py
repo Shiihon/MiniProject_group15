@@ -115,7 +115,40 @@ if page == "Wine Quality Analysis":
         fig4 = px.scatter_3d(chosen_df, x=x_3d, y=y_3d, z=z_3d, color="quality", title="3D Feature Scatter", color_continuous_scale="Viridis")
         # displays the plotted figure
         st.plotly_chart(fig4, use_container_width=True)
-
+    
+     
+    if dataset_choice == "Red & White Wine":
+        # Correlation Matrix Explanation
+        st.subheader("Correlation Matrix")
+        st.write("""
+       The correlation matrix is used to measure the strength and direction of linear relationships between all numerical variables in the dataset.
+        The correlation coefficient (r) ranges from -1 to 1:
+        - **+1** means a perfect positive correlation
+        - **0** means no linear correlation
+        - **–1** means a perfect negative correlation
+    """)
+        # Correlation with wine quality only
+        correlation_matrix = chosen_df.corr(numeric_only=True)
+        # extracts the "quality" column from the correlation matrix
+        quality_corr = correlation_matrix[['quality']].sort_values(by='quality', ascending=False)
+        st.subheader("Correlation with Wine Quality")
+        st.write("This table shows how strongly each variable is linearly related to wine quality:")
+        # displays the quality_corr table in a colorful interactive table
+        st.dataframe(quality_corr.style.background_gradient(cmap='RdYlGn', axis=0))
+        st.write("""
+        - **Alcohol** has the strongest positive correlation with wine quality → **r = 0.469**
+        - **pH** has the weakest correlation → **r = 0.040**, indicating almost no linear impact        
+    """)
+        # Correlation with wine quality only
+        st.subheader("Full correlation matrix ")
+        st.write("Presented is the full correlation matrix showing all variable relationships")
+        st.dataframe(correlation_matrix.style.background_gradient(cmap='coolwarm', axis=None))
+        st.write("""
+        Some of the other strong correlation in the matrix is:
+        - **Alcohol** & **Denisty**, with a correlation r = **-0.667
+        - **Free sulfur dioxide**  & **Total Sulfur Dioxide**, with a correlation r = **0.721        
+    """)
+        
     # Correlation Heatmap
     if st.checkbox("Show Correlation Heatmap"):
         st.subheader("Correlation Heatmap")
