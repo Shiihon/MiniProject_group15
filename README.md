@@ -25,6 +25,12 @@ Website: Data visualization toolbox – dat3cph.github.io
 → Helped with making 2D scatter plots in matplotlib and how to color the points by wine quality in task 14.
 
 # Miniproject 3:
+```diff
+! Potential Problem on Task 3: Classification
+- The Random Forest model performs reasonably well but there’s an important issue in the cleaning of data that can hurt the model's quality, especially on categorical features like JobRole, Department, MaritalStatus, etc.
+- Using LabelEncoder on nominal categories is risky and can introduce bias in how splits are made in the tree, since the Random Forest might treat the values as ordered, but they are not supposed to be ordered.
+```
+
 ### Which machine learning methods did you choose to apply in the application and why?
 #### For the classification task of predicting employee attrition
 - Random Forest is an ensemble learning method that builds multiple decision trees and combines their results for more accurate and stable predictions. The reason for selecting this method is:
