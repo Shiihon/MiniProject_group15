@@ -32,6 +32,16 @@ Website: Data visualization toolbox – dat3cph.github.io
   - It automatically captures non-linear relationships and feature interactions - such as how 'YearsAtCompany ' and 'JobSatisfaction' could affect attrition together.
   - It provides feature importance scores, which are helpful for interpretability in an HR context.
 
+### For the clustering task of segmenting employees into meaningful groups
+- We used KMeans Clustering, an unsupervised learning algortihm that groups data points based on similarity across selected features.
+- The goal was to identify natural segments in th eworkforce based on factors such as income, age, job satisfaction, and years at the company.
+- KMeans was chosen because:
+ -  it's a simple, yet powerful algorithm that works
+ well for identifying patterns in datasets.
+ - Allowed us to divide employees into distinct groups without needing labeled outcomes.
+ - We could use the silhuette score to evaluate and choose the most optimal number of clusters. Which in our case was K = 2, based on our silhouette score of 0.2001.
+ 
+
 ### How accurate is your solution of prediction? Explain the meaning of the quality measures.
 #### For the classification task of predicting employee attrition
 - The model achieved an overall accuracy of 85.9% on the test set but it seems imbalanced
@@ -43,6 +53,7 @@ Website: Data visualization toolbox – dat3cph.github.io
     - The F1-score (Attrition = Yes) being 0.45 is a relatively low score indicating the model is not catching enough of the true "leavers."
     - The Macro Average F1-score being 0.68 gives equal weight to both classes and highlights and tells us that the model struggles more with predicting attrition than retention.
 
+
 ### Which are the most decisive factors for quitting a job? Why do people quit their job?
 #### For the classification task of predicting employee attrition
 - The Random Forest model suggests that employees' income, age, commute distance, and tenure are the primary factors influencing attrition. Job satisfaction, overtime, and the work environment also play key roles, but not as much as the other features. Some of the primary reasons could be:
@@ -51,6 +62,13 @@ Website: Data visualization toolbox – dat3cph.github.io
   - Employees who live farther away from the office may be more prone to attrition due to long commutes. This can lead to higher burnout or dissatisfaction, especially in jobs that are physically demanding.
   - Employees who have worked at the company for a longer time or who have been with the same manager for several years may experience stagnation or a lack of new challenges, which could influence their decision to leave.
 
+### For the clustering task of segmenting employees into meaningful groups
+- We got revealed two clear employee segments:
+ - Cluster 1: employees with shorter tenure, lower income and lower job levels.
+ - Cluster 2: more experienced employees with higher salaries and longer time at the company.
+- The observations from our clustering results revealed that employees in Cluster 1 may be at a higher risk of leaving due to limited compensation and career development.
+- Supporting this departments like Sales and HR had a larger share of Cluster 1 employees, pointing to possible retention challenges.
+
 ### What could be done for further improvement of the accuracy of the models?
 #### For the classification task of predicting employee attrition
 - To improve the Random Forest model, especially its ability to correctly identify employees likely to leave we could:
@@ -58,13 +76,35 @@ Website: Data visualization toolbox – dat3cph.github.io
   - Combine features or create new ones, such as YearsInCurrentRole / TotalWorkingYears to represent role stability
   - Or simply try alternative models/use other classifiers to compare accuracy
 
+### For the clustering task of segmenting employees into meaningful groups
+- Trying other clustering algorithms like DBSCAN or hierarchical clustering, which may capture more complex patterns. 
+- Improving feature selection, such as removing weakly correlated variables or testing new derived features.
+- Performing PCA (Principal Component Analysis) before clustering to reduce noise and highlight meaningful structure in the data.
+
 ### Which work positions and departments are in higher risk of losing employees?
+By analyzing the cluster distribution across departments, we found that:
+- Sales, Human Resources, and Research & Development had a higher number of employees in Cluster 1 — the segment associated with lower tenure, lower salary, and earlier career stage.
+- For example, over 68% of HR employees were in Cluster 1.
+This suggests that these departments may face higher retention risks, and could benefit from targeted career development or engagement strategies.
 
 ### Are employees of different gender paid equally in all departments?
+A grouped analysis of average monthly income by gender and department showed no major pay inequality across the dataset.
+- Minor differences were visible in some departments:
+ - In Human Resources, for instance, female employees had slightly higher average income than male employees.
+
+Overall, the data does not indicate a consistent gender pay gap, but further investigation (e.g. into job roles or seniority) would be needed for a deeper audit.
 
 ### Do the family status and the distance from work influence the work-life balance?
+From the clustering and statistical analysis:
+- The average work-life balance rating was nearly identical across clusters (≈ 2.76).
+- The correlation between DistanceFromHome and WorkLifeBalance was -0.026, which is nearly zero — meaning no meaningful relationship exists between how far someone lives and how they rate their work-life balance.
+Marital status was not found to significantly differ across clusters or strongly influence work-life balance either.
 
 ### Does education make people happy (satisfied from the work)?
+An analysis of average job satisfaction by education level revealed:
+- There is no clear trend that more education = more job satisfaction.
+- Surprisingly, employees with lower education levels (e.g. “Below College”) had slightly higher satisfaction than those with advanced degrees.
+This suggests that education alone is not a strong predictor of job satisfaction, and that other factors like job role or expectations might have more impact.
 
 ### Which were the challenges in the project development?
 
