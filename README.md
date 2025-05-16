@@ -25,17 +25,11 @@ Website: Data visualization toolbox – dat3cph.github.io
 → Helped with making 2D scatter plots in matplotlib and how to color the points by wine quality in task 14.
 
 # Miniproject 3:
-```diff
-! Potential Problem on Task 3: Classification
-- The Random Forest model performs reasonably well but there’s an important issue in the cleaning of data that can hurt the model's quality, especially on categorical features like JobRole, Department, MaritalStatus, etc.
-- Using LabelEncoder on nominal categories is risky and can introduce bias in how splits are made in the tree, since the Random Forest might treat the values as ordered, but they are not supposed to be ordered.
-```
-
 ### Which machine learning methods did you choose to apply in the application and why?
 #### For the classification task of predicting employee attrition
 - Random Forest is an ensemble learning method that builds multiple decision trees and combines their results for more accurate and stable predictions. The reason for selecting this method is:
   - It is robust to overfitting, especially when compared to individual decision trees.
-  - It automatically captures non-linear relationships and feature interactions - such as how 'YearsAtCompany ' and 'JobSatisfaction' could affect attrition together.
+  - It automatically captures non-linear relationships and feature interactions - such as how 'JobInvolvement ' and 'EnvironmentSatisfaction' could affect attrition together.
   - It provides feature importance scores, which are helpful for interpretability in an HR context.
 
 #### For the clustering task of segmenting employees into meaningful groups
@@ -50,23 +44,23 @@ Website: Data visualization toolbox – dat3cph.github.io
 
 ### How accurate is your solution of prediction? Explain the meaning of the quality measures.
 #### For the classification task of predicting employee attrition
-- The model achieved an overall accuracy of 85.9% on the test set but it seems imbalanced
+- The model achieved an overall accuracy of 84.6% on the test set but it seems imbalanced
   - I evaluated the model using a Confusion matrix to help us understand how well the classifier did based on number of cases of correct or wrong prediction
-    - The model correctly predicted 125 out of 128 employees who stayed.
-    - It correctly predicted 9 out of 28 employees who left.
+    - The model correctly predicted 126 out of 128 employees who stayed.
+    - It correctly predicted 6 out of 28 employees who left.
     - When the model predicts that an employee will leave, it is correct 75% of the time.
-    - The model only detects 32% of the employees who actually leave.
-    - The F1-score (Attrition = Yes) being 0.45 is a relatively low score indicating the model is not catching enough of the true "leavers."
-    - The Macro Average F1-score being 0.68 gives equal weight to both classes and highlights and tells us that the model struggles more with predicting attrition than retention.
+    - The model only detects 21% of the employees who actually leave.
+    - The F1-score (Attrition = Yes) being 0.33 is a relatively low score indicating the model is not catching enough of the true "leavers."
+    - The Macro Average F1-score being 0.62 gives equal weight to both classes and highlights and tells us that the model struggles more with predicting attrition than retention.
 
 
 ### Which are the most decisive factors for quitting a job? Why do people quit their job?
 #### For the classification task of predicting employee attrition
-- The Random Forest model suggests that employees' income, age, commute distance, and tenure are the primary factors influencing attrition. Job satisfaction, overtime, and the work environment also play key roles, but not as much as the other features. Some of the primary reasons could be:
-  - Employees with lower salaries might be more inclined to leave for better opportunities. High compensation can be a strong retention factor.
-  - Younger employees or those with less experience might be more likely to leave in search of better growth opportunities. On the other hand, older or more experienced employees might expect career stability.
-  - Employees who live farther away from the office may be more prone to attrition due to long commutes. This can lead to higher burnout or dissatisfaction, especially in jobs that are physically demanding.
-  - Employees who have worked at the company for a longer time or who have been with the same manager for several years may experience stagnation or a lack of new challenges, which could influence their decision to leave.
+- The Random Forest model suggests that employees' income, age, commute distance, and tenure are the primary factors influencing attrition. Number of comapnies that they've worked at, overtime, and the work environment also play key roles, but not as much as the other features. Some of the primary reasons could be:
+  - Compensation (MonthlyIncome, PercentSalaryHike): Employees feeling underpaid or without raises may seek better opportunities elsewhere.
+  - Work-Life Balance (OverTime, DistanceFromHome): Employees working long hours or dealing with long commutes are at higher risk of burnout and leaving.
+  - Experience and Career Growth (TotalWorkingYears, YearsAtCompany): Lack of career progression or stagnation can lead to dissatisfaction, especially for employees with more experience.
+  - Job Engagement (JobInvolvement, EnvironmentSatisfaction): Employees who are disengaged or dissatisfied with their environment are more likely to leave.
 
 #### For the clustering task of segmenting employees into meaningful groups
 - We got revealed two clear employee segments:
